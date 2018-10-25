@@ -26,4 +26,10 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
+
+  testWidgets('You shall not pass', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(new MyApp());
+    expect(find.text('no such text'), findsOneWidget); // This will fail
+  });
 }
