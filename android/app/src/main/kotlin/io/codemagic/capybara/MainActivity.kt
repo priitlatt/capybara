@@ -1,4 +1,4 @@
-package io.nevercode.capybara
+package io.codemagic.capybara
 
 import android.os.Bundle
 
