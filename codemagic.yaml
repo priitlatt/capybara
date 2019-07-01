@@ -1,0 +1,24 @@
+magic:
+  script:
+  - '# echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore'
+  - '# echo "storePassword=$CM_KEYSTORE_PASSWORD" > $FCI_BUILD_DIR/android/key.properties'
+  - '# echo "keyPassword=$CM_KEY_ALIAS_PASSWORD" >> $FCI_BUILD_DIR/android/key.properties'
+  - '# echo "keyAlias=$CM_KEY_ALIAS_USERNAME" >> $FCI_BUILD_DIR/android/key.properties'
+  - '# echo "storeFile=/tmp/keystore.keystore" >> $FCI_BUILD_DIR/android/key.properties'
+  - echo "flutter.sdk=/Users/builder/programs/flutter" > $FCI_BUILD_DIR/android/local.properties
+  - '# git clone https://github.com/NevercodeHQ/codemagic-build-scripts.git /tmp/build-scripts'
+  - '# python3 /tmp/build-scripts/ios/ios_codesigning_setup.py '
+  - flutter packages pub get
+  - flutter build apk
+  - flutter build ios --debug --no-codesign
+  - python3 /tmp/build-scripts/ios/ipa_build.py $FCI_BUILD_DIR
+  cache_paths:
+  - $HOME/.pub-cache
+  - $HOME/.gradle/caches
+  branch_patterns:
+  - pattern: '*'
+    include: true
+  software:
+    flutter: stable
+    xcode: latest
+  environment: []
