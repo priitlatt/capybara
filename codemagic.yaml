@@ -123,7 +123,7 @@ workflows:
       - build/**/outputs/**/*.aab
       - build/**/outputs/**/mapping.txt
       - flutter_drive.log
-  martin-workflow:
+  test-workflow:
     name: Martin Workflow
     environment:
       vars:
