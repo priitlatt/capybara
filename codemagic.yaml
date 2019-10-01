@@ -147,7 +147,7 @@ workflows:
       - flutter analyze
       - '# flutter drive --target=test_driver/button_pressing.dart'
       - flutter test
-      - flutter build appbundle --release -v
+      - flutter build apk --release -v
       - '# flutter build web --release'
     automatic_builds: false
     build_on_pr_update: false
