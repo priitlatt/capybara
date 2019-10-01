@@ -134,7 +134,7 @@ workflows:
       enabled: false
       cache_paths: []
     scripts:
-      - echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore'
+      - echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore
       - '# echo "storePassword=$CM_KEYSTORE_PASSWORD" > $FCI_BUILD_DIR/android/key.properties'
       - '# echo "keyPassword=$CM_KEY_ALIAS_PASSWORD" >> $FCI_BUILD_DIR/android/key.properties'
       - '# echo "keyAlias=$CM_KEY_ALIAS_USERNAME" >> $FCI_BUILD_DIR/android/key.properties'
