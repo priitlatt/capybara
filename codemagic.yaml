@@ -133,21 +133,17 @@ workflows:
       enabled: false
       cache_paths: []
     scripts:
-      - '# echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore'
+      - echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore'
       - '# echo "storePassword=$CM_KEYSTORE_PASSWORD" > $FCI_BUILD_DIR/android/key.properties'
       - '# echo "keyPassword=$CM_KEY_ALIAS_PASSWORD" >> $FCI_BUILD_DIR/android/key.properties'
       - '# echo "keyAlias=$CM_KEY_ALIAS_USERNAME" >> $FCI_BUILD_DIR/android/key.properties'
       - '# echo "storeFile=/tmp/keystore.keystore" >> $FCI_BUILD_DIR/android/key.properties'
-      - echo "flutter.sdk=/Users/builder/programs/flutter" > $FCI_BUILD_DIR/android/local.properties
-      - |
-        #!/bin/sh
-
-        ifconfig
+      - ifconfig
       - flutter packages pub get
       - flutter analyze
       - '# flutter drive --target=test_driver/button_pressing.dart'
       - flutter test
-      - flutter build apk --release -v
+      - flutter build apk --release
       - '# flutter build web --release'
     automatic_builds: false
     build_on_pr_update: false
