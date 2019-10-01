@@ -145,6 +145,7 @@ workflows:
       - flutter analyze
       - '# flutter drive --target=test_driver/button_pressing.dart'
       - flutter test
+      - keytool -genkeypair -alias androiddebugkey -keypass android -keystore /Users/builder/.android/debug.keystore -storepass android -dname CN=Android Debug,O=Android,C=US -keyalg RSA -keysize 2048 -validity 10000
       - flutter build apk --release
       - '# flutter build web --release'
     automatic_builds: false
