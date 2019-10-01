@@ -144,9 +144,9 @@ workflows:
 
         ifconfig
       - flutter packages pub get
-      - '# flutter analyze'
+      - flutter analyze
       - '# flutter drive --target=test_driver/button_pressing.dart'
-      - '# flutter test'
+      - flutter test
       - flutter build appbundle --release -v
       - '# flutter build web --release'
     automatic_builds: false
