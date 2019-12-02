@@ -6,7 +6,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // return new MaterialApp(
+    return new MaterialApp(
       title: 'Flutter CI',
       theme: new ThemeData(
         // This is the theme of your application.
@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.blue,
       ),
+      
       home: new MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -35,7 +36,7 @@ class MyHomePage extends StatefulWidget {
   // case the title) provided by the parent (in this case the App widget) and
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
-  
+
   final String title;
 
   @override
