@@ -6,7 +6,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // return new MaterialApp(
+    return new MaterialApp(
       title: 'Flutter CI',
       theme: new ThemeData(
         // This is the theme of your application.
