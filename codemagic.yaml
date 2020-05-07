@@ -1,41 +1,23 @@
-# Automatically generated on 2020-04-29 UTC from https://staging.codemagic.io/app/5c80df6467038200016d45e8/settings
+# Automatically generated on 2020-05-07 UTC from https://staging.codemagic.io/app/5c80df6467038200016d45e8/settings
 # Note that this configuration is not an exact match to UI settings. Review and adjust as necessary.
 
 workflows:
-  default-workflow:
-    name: Default Workflow
+  yaml-workflow:
+    name: YAML Workflow
+    max_build_duration: 60
     environment:
       flutter: stable
       xcode: latest
       cocoapods: default
     scripts:
       - |
-        # set up debug keystore
-        rm -f ~/.android/debug.keystore
-        keytool -genkeypair \
-          -alias androiddebugkey \
-          -keypass android \
-          -keystore ~/.android/debug.keystore \
-          -storepass android \
-          -dname 'CN=Android Debug,O=Android,C=US' \
-          -keyalg 'RSA' \
-          -keysize 2048 \
-          -validity 10000
-      - |
-        # set up local properties
-        echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
+        #!/usr/bin/env python3
+
+        import time, itertools
+
+        for i in itertools.count():
+            print(i)
+            time.sleep(1)
       - flutter packages pub get
-      - flutter build appbundle --debug
-      - |
-        # generate universal apk signed with debug key
-        universal-apk generate \
-          --ks ~/.android/debug.keystore \
-          --ks-pass android \
-          --ks-key-alias androiddebugkey \
-          --key-pass android \
-          --pattern 'build/**/outputs/**/*.aab'
     artifacts:
-      - build/**/outputs/**/*.apk
-      - build/**/outputs/**/*.aab
-      - build/**/outputs/**/mapping.txt
       - flutter_drive.log
