@@ -39,5 +39,6 @@ workflows:
       - flutter_drive.log
     publishing:
       app_store_connect:
+        app_id: some gibberish
         apple_id: priit@nevercode.io
         password: Encrypted(Z0FBQUFBQmZJcFpnV1FVbWMyZXVFblBIRmZxSWJORGJGYUVLQmZWUVVpanV4aU13dlRZb0E1WjhiVW80WTNCMGpMdXZZTVFKWDUzWlFtLTFmYXN4QVZiRW9ORjFKVFAyNXdBRmxNSjY2VDhIM0UwZDV1S1lIbmc9)
