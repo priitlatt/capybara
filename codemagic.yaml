@@ -29,7 +29,6 @@ workflows:
           -keysize 2048 \
           -validity 10000
       - |
-      - |
         echo "bla bla" > blafile
         zip blafile.zip blafile
         # set up local properties
