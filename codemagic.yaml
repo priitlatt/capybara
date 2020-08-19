@@ -29,8 +29,6 @@ workflows:
           -keysize 2048 \
           -validity 10000
       - |
-        echo "bla bla" > blafile
-        zip blafile.zip blafile
         # set up local properties
         echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
       - flutter packages pub get
@@ -49,9 +47,3 @@ workflows:
       - build/**/outputs/**/*.aab
       - build/**/outputs/**/mapping.txt
       - flutter_drive.log
-    publishing:
-      email:
-        recipients:
-          - stanislav@nevercode.io
-      slack:
-        channel: '#dev-slack-publishing-test'
