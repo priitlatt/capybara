@@ -11,9 +11,8 @@ workflows:
       cocoapods: default
     scripts:
       - echo "hello build $FCI_BUILD_NUMBER"
-      - touch /tmp/my.apk
     artifacts:
-      - /tmp/my.apk
+      - ~/small.apk
     publishing:
       app_store_connect:
         apple_id: priit@nevercode.io
