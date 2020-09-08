@@ -14,8 +14,11 @@ workflows:
     artifacts:
       - /tmp/small.apk
     publishing:
+      # scripts:
+      #   - name: Show artifacts
+      #     script: echo $FCI_ARTIFACT_LINKS | jq
+      #   - name: Done
+      #     script: echo Done
       scripts:
-        - name: Show artifacts
-          script: echo $FCI_ARTIFACT_LINKS | jq
-        - name: Done
-          script: echo Done
+        - echo $FCI_ARTIFACT_LINKS | jq
+        - echo Done
