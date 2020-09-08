@@ -18,4 +18,7 @@ workflows:
         apple_id: priit@nevercode.io
         password: Encrypted(Z0FBQUFBQmZWMjkxX0wwUzR3U3V3TUQwd2ZIaEEwU215X3dMUmlLdFhzcV9Db0RVME5aZHl2Z0kxQ1lKRlFtY1ZQdkphTTNzQnpLR2l3NE91NG1XZGxSMWM1d1VrdHZuTkVLRXhROXdkaGRzSFlUOUdpN0pRUTQ9)
       scripts:
-        - echo 'hello'
+        - name: Show artifacts
+          script: echo $FCI_ARTIFACT_LINKS | jq
+        - name: Done
+          script: echo Done
