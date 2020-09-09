@@ -18,7 +18,8 @@ workflows:
         channel: '#channel-name'
         notify_on_build_start: true
       scripts:
-        name: not a valid script
+        - name: not a valid script
+          script: not-a-valid-command
       # scripts:
       #   - name: Show artifacts
       #     script: echo $FCI_ARTIFACT_LINKS | jq
