@@ -14,11 +14,14 @@ workflows:
     artifacts:
       - /tmp/small.apk
     publishing:
+      slack:
+        channel: '#channel-name'
+        notify_on_build_start: true
       # scripts:
       #   - name: Show artifacts
       #     script: echo $FCI_ARTIFACT_LINKS | jq
       #   - name: Done
       #     script: echo Done
-      scripts:
-        - echo $FCI_ARTIFACT_LINKS | jq
-        - echo Done
+      # scripts:
+      #  - echo $FCI_ARTIFACT_LINKS | jq
+      #  - echo Done
