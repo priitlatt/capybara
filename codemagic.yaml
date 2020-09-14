@@ -11,20 +11,17 @@ workflows:
     scripts:
       - name: Create APK
         script: echo $APK | base64 --decode > /tmp/small.apk
+      - name: Fail pipeline
+        script: exit 1
+        test: true
     artifacts:
       - /tmp/small.apk
     publishing:
-      slack:
-        channel: '#channel-name'
-        notify_on_build_start: true
       scripts:
-        - name: not a valid script
-          script: not-a-valid-command
-      # scripts:
-      #   - name: Show artifacts
-      #     script: echo $FCI_ARTIFACT_LINKS | jq
-      #   - name: Done
-      #     script: echo Done
-      # scripts:
-      #  - echo $FCI_ARTIFACT_LINKS | jq
-      #  - echo Done
+        - name: Show artifacts
+          script: echo $FCI_ARTIFACT_LINKS | jq
+        - name: Done
+          script: echo Done
+      scripts:
+       - echo $FCI_ARTIFACT_LINKS | jq
+       - echo Done
