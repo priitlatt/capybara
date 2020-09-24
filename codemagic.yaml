@@ -16,7 +16,6 @@ workflows:
           include: true
           source: true
     scripts:
-      - cd jkljlkjlk
       - |
         # set up debug keystore
         rm -f ~/.android/debug.keystore
