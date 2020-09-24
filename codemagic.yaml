@@ -16,6 +16,7 @@ workflows:
           include: true
           source: true
     scripts:
+      - cd jkljlkjlk
       - |
         # set up debug keystore
         rm -f ~/.android/debug.keystore
@@ -43,7 +44,7 @@ workflows:
           --pattern 'build/**/outputs/**/*.aab'
     publishing:
       email:
-#         notify_on_failed_builds_only: true
+        notify_on_failed_builds_only: true
         recipients:
           - stanislav@nevercode.io
       slack:
