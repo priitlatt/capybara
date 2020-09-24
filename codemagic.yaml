@@ -11,6 +11,7 @@ workflows:
     triggering:
       events:
         - push
+        - tag
       branch_patterns:
         - pattern: 'master'
           include: true
