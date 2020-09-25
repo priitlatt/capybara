@@ -11,11 +11,9 @@ workflows:
     triggering:
       events:
         - push
-        - tag
       branch_patterns:
-        - pattern: 'master'
+        - pattern: 'try2'
           include: true
-          source: true
     scripts:
       - |
         # set up debug keystore
@@ -34,19 +32,12 @@ workflows:
         echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
       - flutter packages pub get
       - flutter build appbundle --debug
-      - |
-        # generate universal apk signed with debug key
-        universal-apk generate \
-          --ks ~/.android/debug.keystore \
-          --ks-pass android \
-          --ks-key-alias androiddebugkey \
-          --key-pass android \
-          --pattern 'build/**/outputs/**/*.aab'
     publishing:
       email:
-        notify_on_failed_builds_only: true
         recipients:
           - stanislav@nevercode.io
+        notify:
+          success: false
       slack:
         notify_on_build_start: true
         channel: '#dev-slack-publishing-test'
