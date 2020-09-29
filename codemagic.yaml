@@ -15,6 +15,7 @@ workflows:
         - pattern: 'try2'
           include: true
     scripts:
+      - cd jflwekjflwejl
       - |
         # set up debug keystore
         rm -f ~/.android/debug.keystore
@@ -38,6 +39,7 @@ workflows:
           - stanislav@nevercode.io
         notify:
           success: false
+          failure: true
       slack:
         notify_on_build_start: true
         channel: '#dev-slack-publishing-test'
