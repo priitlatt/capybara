@@ -36,6 +36,7 @@ workflows:
       email:
         recipients:
           - stanislav@nevercode.io
+          - stanislav.bondarenko.96@gmail.com
         notify:
           success: false
       slack:
