@@ -8,12 +8,102 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
-    triggering:
-      events:
-        - push
-      branch_patterns:
-        - pattern: 'try2'
-          include: true
+    scripts:
+      - |
+        # set up debug keystore
+        rm -f ~/.android/debug.keystore
+        keytool -genkeypair \
+          -alias androiddebugkey \
+          -keypass android \
+          -keystore ~/.android/debug.keystore \
+          -storepass android \
+          -dname 'CN=Android Debug,O=Android,C=US' \
+          -keyalg 'RSA' \
+          -keysize 2048 \
+          -validity 10000
+      - |
+        # set up local properties
+        echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
+      - flutter packages pub get
+      - flutter build appbundle --debug
+    publishing:
+      email:
+        recipients:
+          - stanislav@nevercode.io
+          - stanislav.bondarenko.96@gmail.com
+        notify:
+          success: false
+      slack:
+        notify_on_build_start: true
+        channel: '#dev-slack-publishing-test'
+      github_releases:
+        artifact_patterns:
+          - build/**/outputs/**/*.apk
+      scripts:
+        - echo $FCI_ARTIFACT_LINKS 
+    artifacts:
+      - blafile.zip
+      - build/**/outputs/**/*.apk
+      - build/**/outputs/**/*.aab
+      - build/**/outputs/**/mapping.txt
+      - flutter_drive.log
+# Automatically generated on 2020-04-29 UTC from https://staging.codemagic.io/app/5c80df6467038200016d45e8/settings
+# Note that this configuration is not an exact match to UI settings. Review and adjust as necessary.
+
+  default-workflow2:
+    name: Default Workflow2
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - |
+        # set up debug keystore
+        rm -f ~/.android/debug.keystore
+        keytool -genkeypair \
+          -alias androiddebugkey \
+          -keypass android \
+          -keystore ~/.android/debug.keystore \
+          -storepass android \
+          -dname 'CN=Android Debug,O=Android,C=US' \
+          -keyalg 'RSA' \
+          -keysize 2048 \
+          -validity 10000
+      - |
+        # set up local properties
+        echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
+      - flutter packages pub get
+      - flutter build appbundle --debug
+    publishing:
+      email:
+        recipients:
+          - stanislav@nevercode.io
+          - stanislav.bondarenko.96@gmail.com
+        notify:
+          success: false
+      slack:
+        notify_on_build_start: true
+        channel: '#dev-slack-publishing-test'
+      github_releases:
+        artifact_patterns:
+          - build/**/outputs/**/*.apk
+      scripts:
+        - echo $FCI_ARTIFACT_LINKS 
+    artifacts:
+      - blafile.zip
+      - build/**/outputs/**/*.apk
+      - build/**/outputs/**/*.aab
+      - build/**/outputs/**/mapping.txt
+      - flutter_drive.log
+# Automatically generated on 2020-04-29 UTC from https://staging.codemagic.io/app/5c80df6467038200016d45e8/settings
+# Note that this configuration is not an exact match to UI settings. Review and adjust as necessary.
+
+  default-workflow3:
+    name: Default Workflow3
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
     scripts:
       - |
         # set up debug keystore
