@@ -28,6 +28,9 @@
 .pub/
 build/
 **/flutter_export_environment.sh
+**/*.symbols
+**/.last_build_id
+
 
 # Android related
 **/android/.gradle
