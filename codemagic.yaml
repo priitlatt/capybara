@@ -10,7 +10,7 @@ workflows:
         VARIABLE: value
     cache:
       cache_paths:
-        - $FCI_BUILD_DIR/to_be_cached/*.txt
+        - $FCI_BUILD_DIR/to_be_cached
     scripts:
       - ifconfig
       - mkdir -p $FCI_BUILD_DIR/to_be_cached
