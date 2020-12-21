@@ -10,7 +10,7 @@ workflows:
         VARIABLE: value
     scripts:
       - ifconfig
-      - netstat -na | grep '[:.]\(22\|5900\)\s.*ESTABLISHED'
+      - netstat -na | grep '[:.]\(22\|5900\)\s.*ESTABLISHED' || echo ''
       - echo "Hello"
       - sleep 300
-      - netstat -na | grep '[:.]\(22\|5900\)\s.*ESTABLISHED'
+      - netstat -na | grep '[:.]\(22\|5900\)\s.*ESTABLISHED' || echo ''
