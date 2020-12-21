@@ -11,4 +11,5 @@ workflows:
     scripts:
       - netstat -na | grep '[:.]\(22\|5900\)\s.*ESTABLISHED'
       - echo "Hello"
+      - sleep 300
       - netstat -na | grep '[:.]\(22\|5900\)\s.*ESTABLISHED'
