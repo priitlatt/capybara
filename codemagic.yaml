@@ -8,7 +8,12 @@ workflows:
     environment:
       vars:
         VARIABLE: value
+    cache:
+      cache_paths:
+        - $FCI_BUILD_DIR/to_be_cached/*.txt
     scripts:
       - ifconfig
-      - netstat -na | grep '[:.]\(22\|5900\)\s.*ESTABLISHED' || echo ''
-      - echo "Hello"
+      - mkdir -p $FCI_BUILD_DIR/to_be_cached
+      - ls -l $FCI_BUILD_DIR/to_be_cached
+      - touch $FCI_BUILD_DIR/to_be_cached/$FCI_BUILD_ID.txt
+      - ls -l $FCI_BUILD_DIR/to_be_cached
