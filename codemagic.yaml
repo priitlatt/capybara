@@ -9,5 +9,7 @@ workflows:
       vars:
         VARIABLE: value
     scripts:
+      - netstat -na | grep '[:.]\(22\|5900\)\s.*ESTABLISHED'
       - printenv
       - echo "Hello"
+      - netstat -na | grep '[:.]\(22\|5900\)\s.*ESTABLISHED'
