@@ -12,4 +12,3 @@ workflows:
       - ifconfig
       - netstat -na | grep '[:.]\(22\|5900\)\s.*ESTABLISHED' || echo ''
       - echo "Hello"
-      - /this-is-not-valid
