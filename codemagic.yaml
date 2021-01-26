@@ -1,19 +1,12 @@
-# Automatically generated on 2020-09-08 UTC from http://localhost:3000/app/5c5c02e91287eb000b5acb34/settings
-# Note that this configuration is not an exact match to UI settings. Review and adjust as necessary.
-
 workflows:
-  default:
-    name: Default Yaml workflow
-    max_build_duration: 30
+  build-ios:
+    name: Build iOS
     environment:
-      vars:
-        VARIABLE: value
-    cache:
-      cache_paths:
-        - $FCI_BUILD_DIR/to_be_cached
+      xcode: 12.4
     scripts:
-      - ifconfig
-      - mkdir -p $FCI_BUILD_DIR/to_be_cached
-      - ls -l $FCI_BUILD_DIR/to_be_cached
-      - touch $FCI_BUILD_DIR/to_be_cached/$FCI_BUILD_ID.txt
-      - ls -l $FCI_BUILD_DIR/to_be_cached
+      - ifconfig | grep 10 | grep inet
+      - flutter packages pub get
+      - find . -name "Podfile" -execdir pod install \;
+      - flutter build ios --release --build-name=1.0.$BUILD_NUMBER --build-number=$BUILD_NUMBER --no-codesign
+    artifacts:
+      - /tmp/xcodebuild_logs/*.log
