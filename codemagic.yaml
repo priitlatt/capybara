@@ -2,6 +2,7 @@ workflows:
   build-ios:
     name: Build iOS
     environment:
+      flutter: dev
       xcode: 12.4
     scripts:
       - ifconfig | grep 10 | grep inet
