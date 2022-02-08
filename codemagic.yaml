@@ -3,7 +3,6 @@ workflows:
     name: Build iOS
     environment:
       xcode: 12.4
-      flutter: invalid-channel
     scripts:
       - ifconfig | grep 10 | grep inet
       - flutter packages pub get
