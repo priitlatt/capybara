@@ -10,3 +10,7 @@ workflows:
       - flutter build ios --release --build-name=1.0.$BUILD_NUMBER --build-number=$BUILD_NUMBER --no-codesign
     artifacts:
       - /tmp/xcodebuild_logs/*.log
+  empty:
+    name: Empty
+    scripts:
+      - echo "empty"
