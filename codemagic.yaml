@@ -12,5 +12,7 @@ workflows:
       - /tmp/xcodebuild_logs/*.log
   empty:
     name: Empty
+    environment:
+      xcode: 13.3
     scripts:
       - echo "empty"
