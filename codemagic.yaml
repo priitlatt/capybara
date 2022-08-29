@@ -1,13 +1,16 @@
 workflows:
-  build-ios:
-    name: Build iOS
+  wf:
     environment:
       xcode: 13.3
+      vars:
+        v: value
+      groups:
+        - g1
+        - g2
+        - s
     scripts:
-      - ifconfig | grep 10 | grep inet
-      - flutter packages pub get
-      - find . -name "Podfile" -execdir pod install \;
-      - flutter build ios --release --build-name=1.0.$BUILD_NUMBER --build-number=$BUILD_NUMBER --no-codesign
+      - printenv
+      - app-store-connect get-profile kana || true
     artifacts:
       - /tmp/xcodebuild_logs/*.log
   empty:
