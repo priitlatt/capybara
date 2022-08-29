@@ -8,6 +8,12 @@ workflows:
         - g1
         - g2
         - s
+        - team
+      ios_signing:
+        distribution_type: development
+        bundle_identifier: io.codemagic.capybara
+      android_signing:
+        - codemagic-key
     scripts:
       - printenv
       - app-store-connect get-profile kana || true
