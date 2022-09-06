@@ -17,7 +17,8 @@ workflows:
         - codemagic-key
     scripts:
       - printenv
-      - app-store-connect get-profile kana || true
+      - python -c "import subprocess; subprocess.run('app-store-connect get-profile kana', shell=True)"
+#       - app-store-connect get-profile kana || true
     artifacts:
       - /tmp/xcodebuild_logs/*.log
   empty:
