@@ -10,9 +10,9 @@ workflows:
         - g2
         - s
         - team
-      ios_signing:
-        distribution_type: development
-        bundle_identifier: io.codemagic.capybara
+#       ios_signing:
+#         distribution_type: development
+#         bundle_identifier: io.codemagic.capybara
       android_signing:
         - codemagic-key
     scripts:
