@@ -1,6 +1,6 @@
 workflows:
   wf:
-    instance_type: mac_mini_m1
+    instance_type: linux
     environment:
       xcode: 13.3
       vars:
