@@ -1,6 +1,6 @@
 workflows:
   wf:
-    instance_type: linux
+    instance_type: windows_x2
     environment:
       xcode: 13.3
       vars:
