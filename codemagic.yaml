@@ -16,7 +16,7 @@ workflows:
       xcode: '14.0'
       cocoapods: default
     scripts:
-      - find . -name "Podfile" -execdir pod install \;
+      - flutter packages pub get
       - keychain initialize
       - app-store-connect fetch-signing-files "io.codemagic.capybara" --type IOS_APP_STORE
       - keychain add-certificates
