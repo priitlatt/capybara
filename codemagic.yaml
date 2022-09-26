@@ -21,7 +21,7 @@ workflows:
       - app-store-connect fetch-signing-files "io.codemagic.capybara" --type IOS_APP_STORE
       - keychain add-certificates
       - xcode-project use-profiles
-      - flutter build ipa --export-options-plist=~/export_options.plist
+      - flutter build ipa --export-options-plist ~/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
