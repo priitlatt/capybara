@@ -7,6 +7,8 @@ workflows:
     instance_type: mac_mini_m1
     max_build_duration: 60
     environment:
+      groups:
+        - integers
       vars:
         KANA: 1
         APP_STORE_CONNECT_ISSUER_ID: 7d812fe2-8abd-47ca-9d27-3ed7e62d7b6d
