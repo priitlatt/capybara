@@ -30,7 +30,7 @@ build/
 **/flutter_export_environment.sh
 **/*.symbols
 **/.last_build_id
-
+.flutter-plugins-dependencies
 
 # Android related
 **/android/.gradle
