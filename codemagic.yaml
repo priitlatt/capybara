@@ -1,18 +1,19 @@
 workflows:
-  build-ios:
-    name: Build iOS
+  build-android:
+    name: Build Android
+    instance_type: mac_mini_m1
+    android_signing:
+      - capybara-keystore
     environment:
-      xcode: 13.3
+      groups:
+        - google-play-credentials
     scripts:
-      - ifconfig | grep 10 | grep inet
       - flutter packages pub get
-      - find . -name "Podfile" -execdir pod install \;
-      - flutter build ios --release --build-name=1.0.$BUILD_NUMBER --build-number=$BUILD_NUMBER --no-codesign
+      - flutter build appbundle --release --build-number=$PROJECT_BUILD_NUMBER
     artifacts:
       - /tmp/xcodebuild_logs/*.log
-  empty:
-    name: Empty
-    environment:
-      xcode: 13.3
-    scripts:
-      - echo "empty"
+    publishing:
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: alpha
+        promote_to_track: internal
