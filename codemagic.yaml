@@ -11,8 +11,8 @@ workflows:
       - flutter packages pub get
       - flutter build appbundle --release --build-number=$PROJECT_BUILD_NUMBER
     artifacts:
-      - **/*.aab
-      - **/*.apk
+      - '**/*.aab'
+      - '**/*.apk'
     publishing:
       google_play:
         credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
