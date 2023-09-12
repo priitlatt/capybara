@@ -1,7 +1,7 @@
 workflows:
   build-android:
     name: Build Android
-    instance_type: mac_mini_m1
+    instance_type: linux
     environment:
       groups:
         - google-play-credentials
