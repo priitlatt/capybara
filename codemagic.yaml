@@ -17,4 +17,6 @@ workflows:
       google_play:
         credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
         track: alpha
-        promote_to_track: internal
+        release_promotion:
+          track: internal
+          rollout_fraction: 0.5
