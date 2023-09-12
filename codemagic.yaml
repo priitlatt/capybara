@@ -2,11 +2,11 @@ workflows:
   build-android:
     name: Build Android
     instance_type: mac_mini_m1
-    android_signing:
-      - capybara-keystore
     environment:
       groups:
         - google-play-credentials
+      android_signing:
+        - capybara-keystore
     scripts:
       - flutter packages pub get
       - flutter build appbundle --release --build-number=$PROJECT_BUILD_NUMBER
