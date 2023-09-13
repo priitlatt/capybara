@@ -19,4 +19,5 @@ workflows:
         track: alpha
         release_promotion:
           track: internal
-          rollout_fraction: 0.5
+          # rollout_fraction: 0.5
+          promote_as_draft: true
