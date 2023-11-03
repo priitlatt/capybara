@@ -4,7 +4,8 @@ workflows:
     instance_type: linux
     environment:
       groups:
-        - google-play-credentials
+        # - google-play-credentials
+        - playstore_credentials
       android_signing:
         - capybara-keystore
       vars:
