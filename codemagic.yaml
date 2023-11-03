@@ -7,6 +7,8 @@ workflows:
         - google-play-credentials
       android_signing:
         - capybara-keystore
+      vars:
+        GCLOUD_SERVICE_ACCOUNT_CREDENTIALS_HOLDER: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
     scripts:
       - flutter packages pub get
       - flutter build appbundle --release --build-number=$PROJECT_BUILD_NUMBER
@@ -15,9 +17,6 @@ workflows:
       - 'build/app/outputs/**/*.apk'
     publishing:
       google_play:
-        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        # credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS_HOLDER
         track: alpha
-        release_promotion:
-          track: internal
-          # rollout_fraction: 0.5
-          promote_as_draft: true
