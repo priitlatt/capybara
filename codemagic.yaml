@@ -12,10 +12,10 @@ workflows:
         GCLOUD_SERVICE_ACCOUNT_CREDENTIALS_HOLDER: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
     scripts:
       - script: |
-        source settings.env
-        echo 'GCLOUD_SERVICE_ACCOUNT_CREDENTIALS<<DELIMITER' >> $CM_ENV
-        echo "$GCLOUD_SERVICE_ACCOUNT_CREDENTIALS" >> $CM_ENV
-        echo 'DELIMITER' >> $CM_ENV
+          source settings.env
+          echo 'GCLOUD_SERVICE_ACCOUNT_CREDENTIALS<<DELIMITER' >> $CM_ENV
+          echo "$GCLOUD_SERVICE_ACCOUNT_CREDENTIALS" >> $CM_ENV
+          echo 'DELIMITER' >> $CM_ENV
       - printenv
       - cat $CM_ENV
       - flutter packages pub get
