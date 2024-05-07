@@ -1,18 +1,58 @@
 workflows:
-  build-ios:
-    name: Build iOS
-    environment:
-      xcode: 13.3
+  default:
     scripts:
-      - ifconfig | grep 10 | grep inet
-      - flutter packages pub get
-      - find . -name "Podfile" -execdir pod install \;
-      - flutter build ios --release --build-name=1.0.$BUILD_NUMBER --build-number=$BUILD_NUMBER --no-codesign
-    artifacts:
-      - /tmp/xcodebuild_logs/*.log
-  empty:
-    name: Empty
+      - name: Say Hello
+        script: echo "Hello Codemagician!"
+      - networksetup -listallnetworkservices
+      - networksetup -getdnsservers Ethernet
+
+  unity:
     environment:
-      xcode: 13.3
+      unity: 2021.3.28f1
     scripts:
-      - echo "empty"
+      - $UNITY_HOME/Contents/MacOS/Unity -version
+
+  net:
+    scripts:
+      - sudo df -h /
+      - networkQuality -v -s
+      - time wget --no-verbose "https://storage.googleapis.com/codemagic-builder/production/linux/x86_64/builder?Expires=1711493582&GoogleAccessId=builder-artifacts-manager%40woven-voyage-217607.iam.gserviceaccount.com&Signature=PDGr8fH8%2FPyoRUluqinaon07AVVpotQeLbheU2PjlpHx9YWMvYtHVkbZZd4rZoaJxLF%2FCIJtKLQku7lnDH3BJn5QYxWQe%2FyTwnzrqjP2TEeJbPw2FXR872qaaHTeS4Zs5OoOnSQGBNqD0aedAR5PFWDHcQ7r%2BuyYM88kSz8le4HWwGxfe2H8swM3wwgv6SVbYIaxTR54HYkaNHzUn0yYexmjuKHUzD2Qgh66448%2BHfM6rh06vP0ZDdBppRrWR0H0f66XEWXnuQU4uPcLD4JMWVsStm1DG2G%2FvF%2B4gc0C2x2umzt1eM%2FOzKUBGSzdihee3whdQnUxx0kRs5qMlMn8Aw%3D%3D" -O builder_gcloud
+      - time aria2c -x 6 "https://storage.googleapis.com/codemagic-builder/production/linux/x86_64/builder?Expires=1711493582&GoogleAccessId=builder-artifacts-manager%40woven-voyage-217607.iam.gserviceaccount.com&Signature=PDGr8fH8%2FPyoRUluqinaon07AVVpotQeLbheU2PjlpHx9YWMvYtHVkbZZd4rZoaJxLF%2FCIJtKLQku7lnDH3BJn5QYxWQe%2FyTwnzrqjP2TEeJbPw2FXR872qaaHTeS4Zs5OoOnSQGBNqD0aedAR5PFWDHcQ7r%2BuyYM88kSz8le4HWwGxfe2H8swM3wwgv6SVbYIaxTR54HYkaNHzUn0yYexmjuKHUzD2Qgh66448%2BHfM6rh06vP0ZDdBppRrWR0H0f66XEWXnuQU4uPcLD4JMWVsStm1DG2G%2FvF%2B4gc0C2x2umzt1eM%2FOzKUBGSzdihee3whdQnUxx0kRs5qMlMn8Aw%3D%3D" --out builder_gcloud_aria2
+      - time wget --no-verbose "https://codemagic-builder.s3.amazonaws.com/production/builder_production_macos_x86_64_builder" -O builder_aws
+      - time aria2c -x 6 "https://codemagic-builder.s3.amazonaws.com/production/builder_production_macos_x86_64_builder" --out builder_aws_aria2 
+      - curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -
+      - sudo df -h /
+
+  mac_arm:
+    instance_type: mac_mini_m1
+    environment:
+      xcode: 15.3
+    scripts:
+      - which flutter
+      - flutter --version
+
+  mac_intel:
+    instance_type: mac_pro
+    environment:
+      xcode: 14.2
+    scripts:
+      - which flutter
+      - flutter --version
+
+  win:
+    instance_type: windows_x2
+    scripts:
+      - which flutter
+      - flutter --version
+
+  linux:
+    instance_type: linux_x2
+    scripts:
+      - which flutter
+      - flutter --version
+
+  fail-with-tests:
+    instance_type: linux_x2
+    scripts:
+      - script: wget https://raw.githubusercontent.com/testmoapp/junitxml/main/examples/junit-basic.xml
+        test_report: "$CM_BUILD_DIR/*.xml"

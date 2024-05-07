@@ -27,17 +27,15 @@
 .pub-cache/
 .pub/
 build/
-**/flutter_export_environment.sh
-**/*.symbols
-**/.last_build_id
-.flutter-plugins-dependencies
 
 # Android related
+**/android/**/gradle-wrapper.jar
 **/android/.gradle
 **/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
-**/android/**/*.jks
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
@@ -64,7 +62,6 @@ build/
 **/ios/Flutter/flutter_assets/
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
-**/ios/**/*.podspec
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
@@ -72,4 +69,3 @@ build/
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-
