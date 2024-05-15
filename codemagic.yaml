@@ -1,18 +1,386 @@
+definitions:
+  ios_inputs: &ios_build_inputs
+    truthyBool:
+      description: Truthy boolean value
+      required: false
+      type: boolean
+      default: true
+    falsyBool:
+      description: Falsy boolean value
+      required: false
+      type: boolean
+      default: false
+    distributionType:
+      description: iOS distribution type 
+      required: false
+      type: choice
+      options: ["ad_hoc", "app_store", "development", "invalid"]
+      default: development
+    bundleIdentifier:
+      description: iOS application bundle identifier
+      required: false
+      default: io.codemagic.capybara
+    certName:
+      description: Certificate reference name
+      required: false
+      default: IPHONE_DEVELOPER_CERT
+    profileName:
+      description: Provisioning profile reference name
+      required: false
+      default: IO_CODEMAGIC_CAPYBARA_DEVELOPMENT
+    asc_key:
+      description: App Store Connect API key reference name
+      required: false
+      default: NEVERCODE LTD
+    publishingEmail:
+      description: E-mail address for publishing
+      required: false
+      default: priit+codemagic@nevercode.io
+    slackChannel:
+      description: Slack channel name for publishing
+      required: false
+      default: priit-dumpster
+    ascPublishingAuth:
+      description: App Store Connect publishing authentication type
+      required: false
+      default: integration
+    ascIssuerId:
+      description: App Store Connect API key issuer ID
+      required: false
+      default: 7d812fe2-8abd-47ca-9d27-3ed7e62d7b6d
+    ascKeyId:
+      description: App Store Connect API key identifier
+      required: false
+      default: KXCJ7SZ6L7
+    ascReleaseType:
+      description: App Store Connect publisher release type
+      required: false
+      default: SCHEDULED
+    ascReleaseDate:
+      description: App Store Connect publisher release date
+      required: false
+      default: "2024-04-29T12:00:00Z"
+    ascCopyright:
+      description: App Store Connect publisher copyright
+      required: false
+      default: Lorem ipsum this is copyright
+
+  android_inputs: &android_build_inputs
+    truthyBool:
+      description: Truthy boolean value
+      required: false
+      type: boolean
+      default: true
+    falsyBool:
+      description: Falsy boolean value
+      required: false
+      type: boolean
+      default: false
+    keystoreName:
+      description: Keystore reference name
+      required: false
+      default: capybara-keystore
+    googlePlayCredentials:
+      description: Google Play publisher credentials
+      required: false
+      default: "$GOOGLE_PLAY_CREDENTIALS"
+    googlePlayTrack:
+      description: Google Play publisher track
+      required: false
+      default: alpha
+    googlePlayInAppUpdatePriority:
+      description: Google Play publisher priority
+      required: false
+      type: number
+      default: 4
+    firebaseToken:
+      description: Firebase publisher token
+      required: false
+      default: my-firebase-token
+    firebaseServiceAccount:
+      description: Firebase publisher service account
+      required: false
+      default: $MY_FIREBASE_SERVICE_ACCOUNT
+    firebaseAppId:
+      description: Firebase publisher application identifier
+      required: false
+      default: some-app-id
+    firebaseGroup:
+      description: Firebase publisher group name
+      required: false
+      default: my-firebase-group
+    firebaseArtifactType:
+      description: Firebase publisher artifact type
+      required: false
+      default: aab
+    partenerCenterStoreId:
+      description: Partner Center publisher store ID
+      required: false
+      default: partener-center-store-id
+    partenerCenterTenantId:
+      description: Partner Center publisher tenant ID
+      required: false
+      default: partener-center-tenant-id
+    partenerCenterClientId:
+      description: Partner Center publisher client ID
+      required: false
+      default: partener-center-client-id
+    partenerCenterClientSecret:
+      description: Partner Center publisher client secret
+      required: false
+      default: partener-center-client-secret
+
 workflows:
-  build-ios:
-    name: Build iOS
+  build-inputs:
+    inputs:
+      environment:
+        description: Environment
+        required: true
+        type: choice
+        options:
+          - debug
+          - staging
+          - production
+      script_failure_action:
+        description: Script failure actions
+        required: false
+        default: publish
+      flutter:
+        description: Flutter version
+        required: false
+        default: 3.19.5
+      cocoapods:
+        description: Cocoapods version
+        required: false
+        default: 1.9.1
+      xcode:
+        description: Xcode version
+        required: false
+        type: choice
+        options:
+          - latest
+          - "15.3"
+          - "15.2"
+        default: latest
+      number:
+        description: Number
+        required: false
+        type: number
+        default: 2
+      optional_text:
+        description: Optional text
+        required: false
+        default: ""
+      ignore_failures:
+        description: Ignore script step failures
+        required: true
+        type: boolean
+      run_condition:
+        description: Run selected build steps
+        required: false
+        type: boolean
+        default: true
+
+    name: Build for ${{ inputs.environment }}
+    max_build_duration: ${{ inputs.number }}
     environment:
-      xcode: 13.3
+      xcode: ${{ inputs.xcode }}
+      cocoapods: ${{ inputs.cocoapods }}
+      flutter: ${{ inputs.flutter }}
+      vars:
+        ENVIRONMENT: ${{ inputs.environment }}
+      groups:
+        - ${{ inputs.environment }}
+      # android_signing: ...  # Tested in Android workflows
+      # ios_signing: ...  # Tested in respective iOS workflows
+    cache:
+      cache_paths:
+        - $CM_BUILD_DIR/${{ inputs.environment }}
+    # integrations: ...  # Tested in respective iOS workflow
+    # when: ...  Same as on a script, tested below
+    working_directory: ${{ inputs.environment }}
     scripts:
-      - ifconfig | grep 10 | grep inet
-      - flutter packages pub get
-      - find . -name "Podfile" -execdir pod install \;
-      - flutter build ios --release --build-name=1.0.$BUILD_NUMBER --build-number=$BUILD_NUMBER --no-codesign
+      - name: Show cache
+        script: find $CM_BUILD_DIR/staging -type f -exec sh -c 'n="{}"; echo "$n => $(cat $n)"' \;
+      - name: Show environment using environment variable
+        script: echo "Building for environment ${ENVIRONMENT:?}"
+      - name: Show environment using inputs
+        script: echo "Building for environment ${{ inputs.environment }}"
+      - name: Show environment to ensure that group "${{ inputs.environment }}" variables are exported
+        script: printenv
+      - name: Test boolean input flag
+        script: exit 1
+        ignore_failure: ${{ inputs.ignore_failures }}
+      - echo "${{ inputs.environment }} @ $(date)" > ${{ inputs.environment }}.txt
+      - pwd && ls -l  # check that default working directory is derived from input
+      - name: Use optional string input directly in script
+        script: echo "Optional text from inputs is '${{ inputs.optional_text }}'"
+        when:
+          condition: ${{ inputs.run_condition }}
+      - name: Test script options
+        script: |
+          mkdir -p $CM_BUILD_DIR/test_results/${{ inputs.environment }}
+          wget https://raw.githubusercontent.com/testmoapp/junitxml/main/examples/junit-basic.xml -O $CM_BUILD_DIR/test_results/${{ inputs.environment }}/results.xml
+        test_report: "$CM_BUILD_DIR/test_results/${{ inputs.environment }}/*.xml"
+      - script: ls -la .
+        working_directory: "$CM_BUILD_DIR/test_results/${{ inputs.environment }}"
+      - script: exit 1
+        on_failure: ${{ inputs.script_failure_action }}
+      - echo "This should be ignored because previous script failed and goes directly to publishing"
     artifacts:
-      - /tmp/xcodebuild_logs/*.log
-  empty:
-    name: Empty
+      - ${{ inputs.environment }}.txt
+      - $CM_BUILD_DIR/test_results/${{ inputs.environment }}/*.xml
+    labels:
+      - build-inputs
+      - ${{ inputs.environment }}
+    # publishers: ...  # Tested on respective Android and iOS workflows
+
+  ios-signing-environment-identifier:
+    name: iOS build using signing files using identifier)
+    inputs: *ios_build_inputs
     environment:
-      xcode: 13.3
+      flutter: 3.19.5
+      ios_signing:
+        distribution_type: ${{ inputs.distributionType }}
+        bundle_identifier: ${{ inputs.bundleIdentifier }}
     scripts:
-      - echo "empty"
+      - xcode-project use-profiles
+      - flutter build ipa --debug --export-options-plist "${HOME:?}/export_options.plist"
+
+  ios-signing-environment-profiles:
+    name: iOS build using explicit manual signing files
+    inputs: *ios_build_inputs
+    environment:
+      flutter: 3.19.5
+      ios_signing:
+        certificates:
+          - ${{ inputs.certName }}
+        provisioning_profiles:
+          - ${{ inputs.profileName }}
+    integrations:
+      app_store_connect: ${{ inputs.asc_key }}
+    scripts:
+      - xcode-project use-profiles
+      - flutter build ipa --debug --export-options-plist "${HOME:?}/export_options.plist"
+
+  ios-signing-integration:
+    name: iOS build using fetched signing files
+    inputs: *ios_build_inputs
+    environment:
+      flutter: 3.19.5
+      groups:
+        - signing
+    integrations:
+      app_store_connect: ${{ inputs.asc_key }}
+    scripts:
+      - keychain initialize
+      - app-store-connect fetch-signing-files ${{ inputs.bundleIdentifier }}
+      - keychain add-certificates
+      - xcode-project use-profiles
+      - flutter build ipa --debug --export-options-plist "${HOME:?}/export_options.plist"
+  
+  android-signing:
+    name: Android build using explicit manual signing files
+    inputs: *android_build_inputs
+    environment:
+      flutter: 3.19.5
+      android_signing:
+        - ${{ inputs.keystoreName }}
+    scripts:
+      - flutter build apk --release
+
+  ios-publishing:
+    name: Publish iOS application
+    inputs: *ios_build_inputs
+    environment:
+      flutter: 3.19.5
+      ios_signing:
+        distribution_type: ${{ inputs.distributionType }}
+        bundle_identifier: ${{ inputs.bundleIdentifier }}
+      groups:
+        - signing
+    integrations:
+      app_store_connect: ${{ inputs.asc_key }}
+    scripts:
+      - keychain initialize
+      - app-store-connect fetch-signing-files ${{ inputs.bundleIdentifier }} --type IOS_APP_STORE --create
+      - keychain add-certificates
+      - xcode-project use-profiles
+      - |
+        flutter build ipa \
+          --export-options-plist "${HOME:?}/export_options.plist" \
+          --build-name=1.0.$PROJECT_BUILD_NUMBER \
+          --build-number=$PROJECT_BUILD_NUMBER \
+          --release
+    artifacts:
+      - build/**/*.ipa
+    publishing:
+      email:
+        recipients:
+          - ${{ inputs.publishingEmail }}
+        notify:
+          success: ${{ inputs.truthyBool }}
+          failure: ${{ inputs.falsyBool }}
+      slack:
+        channel: ${{ inputs.slackChannel }}
+        notify_on_build_start: ${{ inputs.truthyBool }}
+        notify:
+          success: ${{ inputs.truthyBool }}
+          failure: ${{ inputs.falsyBool }}
+      app_store_connect:
+        auth: ${{ inputs.ascPublishingAuth  }}
+        # api_key: $ASC_PRIVATE_KEY
+        # key_id: ${{ inputs.ascKeyId }}
+        # issuer_id: ${{ inputs.ascIssuerId }}
+        submit_to_testflight: ${{ inputs.truthyBool }}
+        expire_build_submitted_for_review: ${{ inputs.truthyBool }}
+        beta_groups:
+          - ${{ inputs.slackChannel }}
+        submit_to_app_store: ${{ inputs.truthyBool }}
+        cancel_previous_submissions: ${{ inputs.truthyBool }}
+        release_type: ${{ inputs.ascReleaseType }}
+        earliest_release_date: ${{ inputs.ascReleaseDate }}
+        copyright: ${{ inputs.ascCopyright }}
+
+  android-publishing:
+    name: Publish Android application
+    inputs: *android_build_inputs
+    environment:
+      flutter: 3.19.5
+      android_signing:
+        - ${{ inputs.keystoreName }}
+      groups:
+        - signing
+    scripts:
+      - |
+        flutter build apk\
+          --build-name=1.0.$PROJECT_BUILD_NUMBER \
+          --build-number=$PROJECT_BUILD_NUMBER \
+          --release
+    artifacts:
+      - build/**/*.apk
+      - build/**/*.aab
+    publishing:
+      firebase:
+        firebase_token: ${{ inputs.firebaseToken }}
+        # firebase_service_account: ${{ inputs.firebaseServiceAccount }}
+        # ios: # Skip testing, this is exactly the same as android
+        android:
+          app_id: ${{ inputs.firebaseAppId }}
+          groups:
+            - ${{ inputs.firebaseGroup }}
+          artifact_type: ${{ inputs.firebaseArtifactType }}
+      partner_center:
+        store_id: ${{ inputs.partenerCenterStoreId }}
+        tenant_id: ${{ inputs.partenerCenterTenantId }}
+        client_id: ${{ inputs.partenerCenterClientId }}
+        client_secret: ${{ inputs.partenerCenterClientSecret }}
+      google_play:
+        credentials: ${{ inputs.googlePlayCredentials }}
+        track: ${{ inputs.googlePlayTrack }}
+        in_app_update_priority: ${{ inputs.googlePlayInAppUpdatePriority }}
+        changes_not_sent_for_review: ${{ inputs.truthyBool }}
+        submit_as_draft: ${{ inputs.truthyBool }}
+        release_promotion:
+          track: ${{ inputs.googlePlayTrack }}
+          promote_as_draft: ${{ inputs.truthyBool }}
