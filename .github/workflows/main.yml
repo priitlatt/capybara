@@ -14,6 +14,10 @@ on:
         description: 'True to print to STDOUT'
         required: true
         type: boolean
+      print_tags:
+        description: 'Not required boolean'
+        required: false
+        type: boolean
       tags:
         description: 'Test scenario tags'
         required: true
