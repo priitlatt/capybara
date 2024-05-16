@@ -37,4 +37,4 @@ jobs:
     if:  ${{ inputs.print_tags }} 
     steps:
       - name: Print the input tag to STDOUT
-        run: echo "The tags are ${{ inputs.tags }}; env=${{ inputs.environment }}; logLevel=${{ inputs.logLevel }}"
+        run: echo "The tags are ${{ inputs.tags }}; env=${{ inputs.environment }}; logLevel=${{ inputs.logLevel }}; optional_boolean=${{ inputs.optional_boolean }}"
