@@ -3,7 +3,8 @@ on:
     inputs:
       logLevel:
         description: 'Log level'
-        required: true
+        # required: true
+        required: false
         default: 'warning'
         type: choice
         options:
