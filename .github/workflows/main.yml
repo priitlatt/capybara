@@ -11,11 +11,11 @@ on:
           - info
           - warning
           - debug
-      optional_boolean:
+      print_tags:
         description: 'True to print to STDOUT'
         # required: true
         type: boolean
-      print_tags:
+      optional_boolean:
         description: 'Not required boolean'
         required: false
         type: boolean
@@ -37,4 +37,4 @@ jobs:
     if:  ${{ inputs.print_tags }} 
     steps:
       - name: Print the input tag to STDOUT
-        run: echo  The tags are ${{ inputs.tags }} 
+        run: echo "The tags are ${{ inputs.tags }}; env=${{ inputs.environment }}; logLevel=${{ inputs.logLevel }}"
