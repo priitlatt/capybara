@@ -10,7 +10,7 @@ on:
           - info
           - warning
           - debug
-      print_tags:
+      optional_boolean:
         description: 'True to print to STDOUT'
         required: true
         type: boolean
