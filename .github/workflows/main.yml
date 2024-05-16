@@ -12,7 +12,7 @@ on:
           - debug
       optional_boolean:
         description: 'True to print to STDOUT'
-        required: true
+        # required: true
         type: boolean
       print_tags:
         description: 'Not required boolean'
