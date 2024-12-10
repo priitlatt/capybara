@@ -16,8 +16,7 @@ workflows:
     instance_type: linux
     environment:
       groups:
-        # - google-play-credentials
-        - playstore_credentials
+        - Google Play
       android_signing:
         - android keystore
       vars:
