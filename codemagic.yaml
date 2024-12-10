@@ -15,6 +15,7 @@ workflows:
     name: Build Android
     instance_type: linux
     environment:
+      fluter: stable
       groups:
         - Google Play
       android_signing:
