@@ -19,7 +19,7 @@ workflows:
         # - google-play-credentials
         - playstore_credentials
       android_signing:
-        - capybara-keystore
+        - android keystore
       vars:
         GCLOUD_SERVICE_ACCOUNT_CREDENTIALS_HOLDER: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
     scripts:
