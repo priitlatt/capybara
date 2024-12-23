@@ -53,3 +53,20 @@ workflows:
     scripts:
       - script: wget https://raw.githubusercontent.com/testmoapp/junitxml/main/examples/junit-basic.xml
         test_report: "$CM_BUILD_DIR/*.xml"
+
+  hooks:
+    environment:
+      groups:
+        - secure
+    triggering:
+      events:
+        - push
+        - pull_request
+        - pull_request_labeled      #GitHub only
+        - tag
+      branch_patterns:
+        - pattern: '*'
+          include: true
+          source: false
+    scripts:
+      - printenv
