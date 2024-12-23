@@ -67,6 +67,6 @@ workflows:
       branch_patterns:
         - pattern: '*'
           include: true
-          source: true
+          source: false
     scripts:
       - printenv
