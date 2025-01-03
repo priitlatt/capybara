@@ -58,6 +58,9 @@ workflows:
     environment:
       groups:
         - secure
+        - another group
+      vars:
+        HURR: durr
     triggering:
       events:
         - push
