@@ -75,6 +75,11 @@ workflows:
       - printenv
     publishing:
       app_store_connect:
-        api_key: $SECRET
-        key_id: 3MD9688D9K
-        issuer_id: $SECURE_IN_ANOTHER_GROUP
+        # api_key: $SECRET
+        # key_id: 3MD9688D9K
+        # issuer_id: $SECURE_IN_ANOTHER_GROUP
+        apple_id: $SECRET
+        password: $SECURE_IN_ANOTHER_GROUP
+      email:
+        recipients:
+          - $SECURE
