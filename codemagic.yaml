@@ -94,4 +94,7 @@ workflows:
           source: false
     scripts:
       - printenv
-
+    publishing:
+      email:
+        recipients:
+          - $SECURE
