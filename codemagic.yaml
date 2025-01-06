@@ -80,24 +80,3 @@ workflows:
         key_id: 123456ABC
         issuer_id: $SECURE_IN_ANOTHER_GROUP
 
-  # hooks2:
-  #   environment:
-  #     groups:
-  #       - secure
-  #       - another group
-  #     vars:
-  #       HURR: durr
-  #   triggering:
-  #     events:
-  #       - push
-  #       - pull_request
-  #     branch_patterns:
-  #       - pattern: '*'
-  #         include: true
-  #         source: false
-  #   scripts:
-  #     - printenv
-  #   publishing:
-  #     email:
-  #       recipients:
-  #         - $SECURE
