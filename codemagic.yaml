@@ -75,9 +75,12 @@ workflows:
       - wget "${IPA_URL:?}"
     artifacts:
       - '*.ipa'
-    # publishing:
-    #   app_store_connect:
-    #     api_key: $SECRET
-    #     key_id: 123456ABC
-    #     issuer_id: $SECURE_IN_ANOTHER_GROUP
-
+    publishing:
+      app_store_connect:
+        api_key: $SECRET
+        key_id: 123456ABC
+        issuer_id: $SECURE_IN_ANOTHER_GROUP
+      email:
+        recipients:
+          - $EMAIL_RECIPIENT
+          - $SECURE_EMAIL_RECIPIENT
