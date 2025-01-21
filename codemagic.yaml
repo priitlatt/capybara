@@ -61,7 +61,7 @@ workflows:
         - another group
       vars:
         HURR: durr
-        BRANCH_PATTERN: 'main|master'
+        BRANCH_PATTERN: 'ma*'
     triggering:
       events:
         - push
