@@ -71,7 +71,7 @@ workflows:
           source: false
     scripts:
       - printenv
-      - echo 'fake ipa' > fake.ipa
+      - wget "${IPA_URL:?}"
     artifacts:
       - '*.ipa'
     # publishing:
