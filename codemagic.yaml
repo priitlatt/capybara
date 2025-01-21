@@ -61,12 +61,13 @@ workflows:
         - another group
       vars:
         HURR: durr
+        BRANCH_PATTERN: 'main|master'
     triggering:
       events:
         - push
         - pull_request
       branch_patterns:
-        - pattern: '*'
+        - pattern: "$BRANCH_PATTERN"
           include: true
           source: false
     scripts:
