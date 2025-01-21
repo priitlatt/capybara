@@ -67,7 +67,7 @@ workflows:
         - push
         - pull_request
       branch_patterns:
-        - pattern: "$BRANCH_PATTERN"
+        - pattern: "$SECURE_PATTERN"
           include: true
           source: false
     scripts:
