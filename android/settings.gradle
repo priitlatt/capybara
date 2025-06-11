@@ -12,6 +12,11 @@ pluginManagement {
 
     repositories {
         google()
+        if (System.getenv()["CI"]) {
+            maven {
+                url "https://nexus.codemagic.io/repository/maven-central"
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
     }
