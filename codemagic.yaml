@@ -43,8 +43,6 @@ workflows:
 
   empty:
     name: Empty
-    environment:
-      xcode: 13.3
     scripts:
       - echo "empty"
 
